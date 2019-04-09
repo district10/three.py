@@ -3,22 +3,13 @@ from threepy.geometry import Geometry
 import numpy as np
 
 
-# Note, may need to hand in absolute directory yourself here
-#  or store the directory somewhere at the root
 class OBJGeometry(Geometry):
 
     def __init__(self, objFileName="", smoothNormals=False):
         super().__init__()
 
-        # open the file, and get the contents
-        os.chdir(os.getcwd() + "..")  # go up one directory
-        # now in theory, we are in the root of the project,
-        # assuming that the geometry package is at the root
-
-        # open the file, get contents, close the file
-        objFile = open(objFileName)
-        objContentString = objFile.read()
-        objFile.close()
+        with open(objFileName) as objFile:
+            objContentString = objFile.read()
 
         # initialize the three lists
         positionList = []
