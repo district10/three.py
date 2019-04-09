@@ -3,6 +3,8 @@ import sys
 import time
 
 from threepy.core import *
+import os
+pwd = os.path.abspath(os.path.dirname(__file__))
 
 
 class Base(object):
@@ -14,7 +16,7 @@ class Base(object):
         pygame.font.init()
 
         # load a custom icon
-        pygame.display.set_icon(pygame.image.load("images/icon.png"))
+        pygame.display.set_icon(pygame.image.load(f"{pwd}/icon.png"))
 
         # initialize buffers to perform antialiasing
         pygame.display.gl_set_attribute(pygame.GL_MULTISAMPLEBUFFERS, 1)

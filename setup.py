@@ -13,4 +13,5 @@ setup(
         'threepy.helpers', 'threepy.lights', 'threepy.material',
         'threepy.mathutils'
     ],
+    include_package_data=True,
 )
