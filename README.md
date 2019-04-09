@@ -1,3 +1,9 @@
+Tests still not working:
+-   TestPostprocessing-8Bit.py
+-   TestPostprocessing-Vignette.py
+
+---
+
 three.py
 ========
 

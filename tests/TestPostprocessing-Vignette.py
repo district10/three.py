@@ -1,50 +1,58 @@
-from core import *
-from cameras import *
-from geometry import *
-from material import *
-from lights import *
+from threepy.core import *
+from threepy.cameras import *
+from threepy.geometry import *
+from threepy.material import *
+from threepy.lights import *
+
+import os
+pwd = os.path.abspath(os.path.dirname(__file__))
+
 
 class TestPostprocessing1(Base):
-    
+
     def initialize(self):
 
         self.setWindowTitle('Postprocessing - Sepia and Vignette')
-        self.setWindowSize(1024,768)
-        
+        self.setWindowSize(1024, 768)
+
         self.renderer = Renderer()
-        self.renderer.setViewportSize(1024,768)
-        self.renderer.setClearColor(0.25,0.25,0.25)
+        self.renderer.setViewportSize(1024, 768)
+        self.renderer.setClearColor(0.25, 0.25, 0.25)
 
         self.scene = Scene()
-        
+
         self.camera = PerspectiveCamera()
-        self.camera.setAspectRatio(1024/768)
-        self.camera.transform.setPosition(0, 0, 6) 
+        self.camera.setAspectRatio(1024 / 768)
+        self.camera.transform.setPosition(0, 0, 6)
         self.cameraControls = FirstPersonController(self.input, self.camera)
 
-        self.scene.add( AmbientLight(strength=0.25) )
-        self.scene.add( DirectionalLight(direction=[-1,-1,-1]) )
+        self.scene.add(AmbientLight(strength=0.25))
+        self.scene.add(DirectionalLight(direction=[-1, -1, -1]))
 
-        self.renderTarget = RenderTarget(1024,768)
-        
-        crateTexture  = OpenGLUtils.initializeTexture("images/crate.jpg")
-        ballTexture  = OpenGLUtils.initializeTexture("images/basketball.png")
-        
-        self.cube = Mesh( BoxGeometry(), SurfaceLightMaterial(texture=crateTexture) )
-        self.cube.transform.translate(1.5, 0, 0, Matrix.LOCAL)        
+        self.renderTarget = RenderTarget(1024, 768)
+
+        crateTexture = OpenGLUtils.initializeTexture(f"{pwd}/images/crate.jpg")
+        ballTexture = OpenGLUtils.initializeTexture(
+            f"{pwd}/images/basketball.png")
+
+        self.cube = Mesh(BoxGeometry(),
+                         SurfaceLightMaterial(texture=crateTexture))
+        self.cube.transform.translate(1.5, 0, 0, Matrix.LOCAL)
         self.scene.add(self.cube)
-        
-        self.sphere = Mesh( SphereGeometry(), SurfaceLightMaterial(texture=ballTexture) )
+
+        self.sphere = Mesh(SphereGeometry(),
+                           SurfaceLightMaterial(texture=ballTexture))
         self.sphere.transform.translate(-1.5, 0, 0, Matrix.LOCAL)
         self.scene.add(self.sphere)
 
         # add postprocessing content
         self.postScene = Scene()
         postGeo = Geometry()
-        vertexPositionData = [[-1,-1],[1,-1],[1,1], [-1,-1],[1,1],[-1,1]]
+        vertexPositionData = [[-1, -1], [1, -1], [1, 1], [-1, -1], [1, 1],
+                              [-1, 1]]
         postGeo.setAttribute("vec2", "vertexPosition", vertexPositionData)
         postGeo.vertexCount = 6
-        
+
         vsCode = """
         in vec2 vertexPosition;
         void main()
@@ -84,32 +92,29 @@ class TestPostprocessing1(Base):
         }
         """
 
-        uniforms = [
-            ["vec2", "textureSize", [1024,768]],
-            ["sampler2D", "image", self.renderTarget.textureID] ]
-        
+        uniforms = [["vec2", "textureSize", [1024, 768]],
+                    ["sampler2D", "image", self.renderTarget.textureID]]
+
         postMat = Material(vsCode, fsCode, uniforms)
-        
+
         postMesh = Mesh(postGeo, postMat)
         self.postScene.add(postMesh)
 
-            
     def update(self):
-        
+
         self.cameraControls.update()
 
         # rotate main scene objects
         self.cube.transform.rotateX(0.005, Matrix.LOCAL)
         self.cube.transform.rotateY(0.008, Matrix.LOCAL)
         self.sphere.transform.rotateY(0.006, Matrix.LOCAL)
-        
+
         # first, render scene into target (texture)
         self.renderer.render(self.scene, self.camera, self.renderTarget)
         # second, render post-processed scene to window.
         # (note: camera irrelevant since projection/view matrices are not used in shader.)
         self.renderer.render(self.postScene, self.camera)
 
-                    
+
 # instantiate and run the program
 TestPostprocessing1().run()
-
