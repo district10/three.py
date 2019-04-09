@@ -3,7 +3,6 @@ from threepy.geometry import *
 from threepy.material import *
 from threepy.mathutils import *
 
-from random import random, uniform
 from math import sin, cos, pi, sqrt
 
 # =============================================================================
