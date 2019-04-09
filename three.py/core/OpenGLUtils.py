@@ -7,7 +7,9 @@ class OpenGLUtils(object):
 
     @staticmethod
     def initializeShader(shaderCode, shaderType):
-    
+        extension = '#extension GL_ARB_shading_language_420pack : require\n'
+        shaderCode = '#version 130\n' + extension + shaderCode
+
         # create empty shader object and return reference value
         shaderID = glCreateShader(shaderType)
         # stores the source code in the shader
@@ -23,22 +25,22 @@ class OpenGLUtils(object):
             # free memory used to store shader program
             glDeleteShader(shaderID)
             # TODO: parse str(errorMessage) for better printing
-            raise Exception(errorMessage)  
-            
+            raise Exception(errorMessage)
+
         # compilation was successful; return shader reference value
         return shaderID
 
     @staticmethod
     def initializeShaderFromCode(vertexShaderCode, fragmentShaderCode):
-        
+
         vertexShaderID   = OpenGLUtils.initializeShader(vertexShaderCode,   GL_VERTEX_SHADER)
         fragmentShaderID = OpenGLUtils.initializeShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
-    
+
         programID = glCreateProgram()
         glAttachShader(programID, vertexShaderID)
         glAttachShader(programID, fragmentShaderID)
         glLinkProgram(programID)
-        
+
         return programID
 
     """
@@ -52,16 +54,16 @@ class OpenGLUtils(object):
         fragmentShaderFile = open(fragmentShaderFileName, mode='r')
         fragmentShaderCode = fragmentShaderFile.read()
         fragmentShaderFile.close()
-        
+
         return OpenGLUtils.initializeShaderFromCode(vertexShaderCode, fragmentShaderCode)
     """
-    
+
     @staticmethod
     def initializeTexture(imageFileName):
         # load image from file
         surface = pygame.image.load(imageFileName)
         return OpenGLUtils.initializeSurface(surface)
-        
+
     @staticmethod
     def initializeSurface(surface):
         # transfer image to string buffer
@@ -75,10 +77,10 @@ class OpenGLUtils(object):
         # send image data to texture buffer
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
                      0, GL_RGBA, GL_UNSIGNED_BYTE, textureData)
-                     
+
         # generate a mipmap for use with 2d textures
         glGenerateMipmap(GL_TEXTURE_2D)
-        
+
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
