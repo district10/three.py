@@ -1,17 +1,16 @@
-from material.Material import *
+from threepy.material.Material import *
 
 # Surface materials
-from material.SurfaceBasicMaterial import *
-from material.SurfaceLightMaterial import *
+from threepy.material.SurfaceBasicMaterial import *
+from threepy.material.SurfaceLightMaterial import *
 
 # Line materials
-from material.LineBasicMaterial import *
-from material.LineSegmentMaterial import *
-from material.LineDashedMaterial import *
+from threepy.material.LineBasicMaterial import *
+from threepy.material.LineSegmentMaterial import *
+from threepy.material.LineDashedMaterial import *
 
 # point materials
-from material.PointBasicMaterial import *
+from threepy.material.PointBasicMaterial import *
 
 # sprite materials
-from material.SpriteMaterial import *
-
+from threepy.material.SpriteMaterial import *

@@ -1,4 +1,5 @@
-from geometry import SphereGeometry
+from threepy.geometry import SphereGeometry
+
 
 class OctahedronGeometry(SphereGeometry):
 

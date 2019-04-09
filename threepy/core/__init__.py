@@ -1,17 +1,17 @@
-from core.Input import *
-from core.Base import *
+from threepy.core.Input import *
+from threepy.core.Base import *
 
-from core.Object3D import *
-from core.Mesh import *
-from core.Scene import *
+from threepy.core.Object3D import *
+from threepy.core.Mesh import *
+from threepy.core.Scene import *
 
-from core.FirstPersonController import *
+from threepy.core.FirstPersonController import *
 
-from core.OpenGLUtils import *
-from core.Renderer import *
-from core.RenderTarget import *
+from threepy.core.OpenGLUtils import *
+from threepy.core.Renderer import *
+from threepy.core.RenderTarget import *
 
-from core.TextImage import *
-from core.Sprite import *
+from threepy.core.TextImage import *
+from threepy.core.Sprite import *
 
-from core.ParticleEngine import *
+from threepy.core.ParticleEngine import *

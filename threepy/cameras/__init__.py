@@ -1,3 +1,3 @@
-from cameras.Camera import *
-from cameras.PerspectiveCamera import *
-from cameras.OrthographicCamera import *
+from threepy.cameras.Camera import *
+from threepy.cameras.PerspectiveCamera import *
+from threepy.cameras.OrthographicCamera import *

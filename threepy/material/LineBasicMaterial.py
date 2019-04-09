@@ -1,9 +1,14 @@
-from core import *
-from material import *
+from threepy.core import *
+from threepy.material import *
+
 
 class LineBasicMaterial(Material):
-        
-    def __init__(self, color=[0,0,0], alpha=1, lineWidth=4, useVertexColors=False):
+
+    def __init__(self,
+                 color=[0, 0, 0],
+                 alpha=1,
+                 lineWidth=4,
+                 useVertexColors=False):
 
         # vertex shader code
         vsCode = """
@@ -59,21 +64,20 @@ class LineBasicMaterial(Material):
 
         # initialize shaders
         super().__init__(vsCode, fsCode)
-        
+
         # set render values
         self.drawStyle = GL_LINE_STRIP
         self.lineWidth = lineWidth
-        
+
         # set default uniform values
-        self.setUniform( "vec3", "color", color )
-        self.setUniform( "float", "alpha", alpha )
-        
+        self.setUniform("vec3", "color", color)
+        self.setUniform("float", "alpha", alpha)
+
         if useVertexColors:
-            self.setUniform( "bool", "useVertexColors", 1 )
+            self.setUniform("bool", "useVertexColors", 1)
         else:
-            self.setUniform( "bool", "useVertexColors", 0 )
-        
-        self.setUniform( "bool", "useDashes", 0 )
-        self.setUniform( "float", "dashLength", 0 )
-        self.setUniform( "float", "gapLength", 0 )
-        
+            self.setUniform("bool", "useVertexColors", 0)
+
+        self.setUniform("bool", "useDashes", 0)
+        self.setUniform("float", "dashLength", 0)
+        self.setUniform("float", "gapLength", 0)
