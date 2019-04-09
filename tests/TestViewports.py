@@ -55,7 +55,7 @@ class TestViewports(Base):
 
         hudImage = TextImage(
             text=" Front View           ",
-            fontFileName="fonts/Souses.otf",
+            fontFileName=f"{pwd}/fonts/Souses.otf",
             fontSize=24,
             fontColor=[255, 255, 255],
             transparent=True)
