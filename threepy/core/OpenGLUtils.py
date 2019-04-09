@@ -1,7 +1,8 @@
 # static methods to load and compile OpenGL shader programs
 from OpenGL.GL import *
 
-import pygame # for loading images / texture data
+import pygame  # for loading images / texture data
+
 
 class OpenGLUtils(object):
 
@@ -33,8 +34,10 @@ class OpenGLUtils(object):
     @staticmethod
     def initializeShaderFromCode(vertexShaderCode, fragmentShaderCode):
 
-        vertexShaderID   = OpenGLUtils.initializeShader(vertexShaderCode,   GL_VERTEX_SHADER)
-        fragmentShaderID = OpenGLUtils.initializeShader(fragmentShaderCode, GL_FRAGMENT_SHADER)
+        vertexShaderID = OpenGLUtils.initializeShader(vertexShaderCode,
+                                                      GL_VERTEX_SHADER)
+        fragmentShaderID = OpenGLUtils.initializeShader(fragmentShaderCode,
+                                                        GL_FRAGMENT_SHADER)
 
         programID = glCreateProgram()
         glAttachShader(programID, vertexShaderID)
@@ -75,8 +78,8 @@ class OpenGLUtils(object):
         glBindTexture(GL_TEXTURE_2D, texid)
 
         # send image data to texture buffer
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-                     0, GL_RGBA, GL_UNSIGNED_BYTE, textureData)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+                     GL_UNSIGNED_BYTE, textureData)
 
         # generate a mipmap for use with 2d textures
         glGenerateMipmap(GL_TEXTURE_2D)
@@ -85,7 +88,7 @@ class OpenGLUtils(object):
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         #use the mip map filter rather than standard filter
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                        GL_LINEAR_MIPMAP_LINEAR)
         # useless - glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE)
         return texid
-
